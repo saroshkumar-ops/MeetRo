@@ -77,14 +77,21 @@ export default function StationPickerScreen({ navigation }: Props) {
           <Text style={styles.settingsLink}>Settings</Text>
         </Pressable>
       </View>
-      <TextInput
-        style={styles.search}
-        placeholder="Search stations…"
-        placeholderTextColor="#888"
-        value={query}
-        onChangeText={setQuery}
-        autoCorrect={false}
-      />
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.search}
+          placeholder="Search stations…"
+          placeholderTextColor="#888"
+          value={query}
+          onChangeText={setQuery}
+          autoCorrect={false}
+        />
+        {query.length > 0 && (
+          <Pressable onPress={() => setQuery('')} style={styles.clearButton} hitSlop={12}>
+            <Text style={styles.clearButtonText}>✕</Text>
+          </Pressable>
+        )}
+      </View>
       <FlatList
         data={rows}
         keyExtractor={row => row.key}
@@ -110,6 +117,13 @@ export default function StationPickerScreen({ navigation }: Props) {
             </Pressable>
           );
         }}
+        ListEmptyComponent={
+          query.trim() !== '' ? (
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>No stations found for "{query}"</Text>
+            </View>
+          ) : null
+        }
       />
     </SafeAreaView>
   );
@@ -126,12 +140,35 @@ const styles = StyleSheet.create({
   },
   title: { color: 'white', fontSize: 20, fontWeight: '700' },
   settingsLink: { color: '#7B9CFF', fontSize: 14 },
-  search: {
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     margin: 16,
-    padding: 12,
-    borderRadius: 10,
     backgroundColor: '#1c1c1f',
+    borderRadius: 10,
+  },
+  search: {
+    flex: 1,
+    padding: 12,
     color: 'white',
+  },
+  clearButton: {
+    padding: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  clearButtonText: {
+    color: '#888',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  emptyContainer: {
+    padding: 32,
+    alignItems: 'center',
+  },
+  emptyText: {
+    color: '#888',
+    fontSize: 15,
   },
   lineHeader: {
     paddingHorizontal: 16,
