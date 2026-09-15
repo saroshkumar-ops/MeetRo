@@ -53,20 +53,33 @@ export default function SettingsScreen() {
       </View>
 
       {settings.simulateMode && (
-        <View style={styles.speedRow}>
-          <Text style={styles.rowLabel}>Playback speed</Text>
-          <View style={styles.speedChips}>
-            {PLAYBACK_SPEEDS.map(speed => (
-              <Pressable
-                key={speed}
-                style={[styles.speedChip, settings.simulatePlaybackSpeed === speed && styles.speedChipSelected]}
-                onPress={() => updateSettings({ simulatePlaybackSpeed: speed })}
-              >
-                <Text style={styles.speedChipText}>{speed}x</Text>
-              </Pressable>
-            ))}
+        <>
+          <View style={styles.speedRow}>
+            <Text style={styles.rowLabel}>Playback speed</Text>
+            <View style={styles.speedChips}>
+              {PLAYBACK_SPEEDS.map(speed => (
+                <Pressable
+                  key={speed}
+                  style={[styles.speedChip, settings.simulatePlaybackSpeed === speed && styles.speedChipSelected]}
+                  onPress={() => updateSettings({ simulatePlaybackSpeed: speed })}
+                >
+                  <Text style={styles.speedChipText}>{speed}x</Text>
+                </Pressable>
+              ))}
+            </View>
           </View>
-        </View>
+
+          <View style={styles.row}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.rowLabel}>Simulate GPS Drops</Text>
+              <Text style={styles.rowHint}>Fake a lost signal in underground sections to test dead reckoning.</Text>
+            </View>
+            <Switch
+              value={settings.simulateGpsDrops}
+              onValueChange={v => updateSettings({ simulateGpsDrops: v })}
+            />
+          </View>
+        </>
       )}
     </SafeAreaView>
   );

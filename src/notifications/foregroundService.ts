@@ -69,7 +69,7 @@ export async function startJourneyForegroundService({ lineId, destinationStation
         line,
         stationsById,
         playbackSpeedMultiplier: settings.simulatePlaybackSpeed,
-        deadZoneStationIds: UNDERGROUND_SEGMENT_IDS_BY_LINE[line.id],
+        deadZoneStationIds: settings.simulateGpsDrops ? UNDERGROUND_SEGMENT_IDS_BY_LINE[line.id] : undefined,
       })
     : createLocationProvider('real');
 

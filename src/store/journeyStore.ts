@@ -10,6 +10,8 @@ export interface Settings {
   simulateMode: boolean;
   /** 1 = real-time, 10 = 10x fast-forward, etc. Only used when simulateMode is on. */
   simulatePlaybackSpeed: number;
+  /** If true, the mock provider will suppress fixes in known underground segments. */
+  simulateGpsDrops: boolean;
 }
 
 interface JourneyStoreState {
@@ -31,6 +33,7 @@ const defaultSettings: Settings = {
   alertStyle: 'default',
   simulateMode: false,
   simulatePlaybackSpeed: 1,
+  simulateGpsDrops: true,
 };
 
 export const useJourneyStore = create<JourneyStoreState>((set) => ({
